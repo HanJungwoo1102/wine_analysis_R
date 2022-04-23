@@ -1,4 +1,4 @@
-library(MASS)
+library(e1071)
 
 wine_dataset <- read.csv("dataset/wine.csv", header = TRUE, sep = ",")
 wine_a_dataset <- subset(wine_dataset, wine == "A")
@@ -11,11 +11,10 @@ test_dataset <- wine_a_dataset[-1:-last_a, ]
 train_dataset <- rbind(train_dataset, wine_b_dataset[1:last_b, ])
 test_dataset <- rbind(test_dataset, wine_b_dataset[-1:-last_b, ])
 
-z <- lda(wine ~ ., data = train_dataset)
+model <- naiveBayes(wine ~ ., data = train_dataset)
 
-pred <- predict(z, test_dataset)
+pred <- predict(model, test_dataset[,-1], method="class")
 
-test_dataset$pred <- pred$class
-print(test_dataset)
-cfm <- table(test_dataset$wine, test_dataset$pred)
+cfm <- table(test_dataset$wine, pred)
+
 print(cfm)

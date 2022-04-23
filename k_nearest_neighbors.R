@@ -1,4 +1,4 @@
-library(MASS)
+library(class)
 
 wine_dataset <- read.csv("dataset/wine.csv", header = TRUE, sep = ",")
 wine_a_dataset <- subset(wine_dataset, wine == "A")
@@ -11,11 +11,17 @@ test_dataset <- wine_a_dataset[-1:-last_a, ]
 train_dataset <- rbind(train_dataset, wine_b_dataset[1:last_b, ])
 test_dataset <- rbind(test_dataset, wine_b_dataset[-1:-last_b, ])
 
-z <- lda(wine ~ ., data = train_dataset)
+train <- train_dataset[,-1]
+class <- train_dataset[,1]
+test <- test_dataset[,-1]
+test_labels <- test_dataset[,1]
 
-pred <- predict(z, test_dataset)
+md1 <- knn(
+    train = train,
+    cl = class,
+    test = test,
+    k = 5
+)
 
-test_dataset$pred <- pred$class
-print(test_dataset)
-cfm <- table(test_dataset$wine, test_dataset$pred)
+cfm <- table(test_dataset$wine, md1)
 print(cfm)

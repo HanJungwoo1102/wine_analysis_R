@@ -1,16 +1,7 @@
 library(rpart)
 wine_dataset <- read.csv("dataset/wine.csv", header = TRUE, sep = ",")
 rp_result <- rpart(
-    wine
-    ~alcohol
-    + acid
-    + ash1
-    + ash2
-    + magnesium
-    + phenol
-    + flavanoids
-    + color
-    + hue,
+    wine ~ .,
     data = wine_dataset,
     method = "class"
 )
