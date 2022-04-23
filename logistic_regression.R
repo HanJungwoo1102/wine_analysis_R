@@ -22,7 +22,7 @@ logr <- glm(
 train_dataset$pred <- predict(logr, newdata = train_dataset, type = 'response')
 test_dataset$pred <- predict(logr, newdata = test_dataset, type = 'response')
 
+cfm <- table(train_dataset$wine, ifelse(train_dataset$pred < 0.5, 'A', 'B'))
+print(cfm)
 cfm <- table(test_dataset$wine, ifelse(test_dataset$pred < 0.5, 'A', 'B'))
-print(test_dataset$wine)
-print(test_dataset$pred)
 print(cfm)

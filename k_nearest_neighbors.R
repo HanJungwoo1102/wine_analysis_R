@@ -19,9 +19,17 @@ test_labels <- test_dataset[,1]
 md1 <- knn(
     train = train,
     cl = class,
+    test = train,
+    k = 5
+)
+md2 <- knn(
+    train = train,
+    cl = class,
     test = test,
     k = 5
 )
 
-cfm <- table(test_dataset$wine, md1)
+cfm <- table(train_dataset$wine, md1)
+print(cfm)
+cfm <- table(test_dataset$wine, md2)
 print(cfm)

@@ -13,9 +13,12 @@ test_dataset <- rbind(test_dataset, wine_b_dataset[-1:-last_b, ])
 
 z <- lda(wine ~ ., data = train_dataset)
 
+pred <- predict(z, train_dataset)
+train_dataset$pred <- pred$class
 pred <- predict(z, test_dataset)
-
 test_dataset$pred <- pred$class
-print(test_dataset)
+
+cfm <- table(train_dataset$wine, train_dataset$pred)
+print(cfm)
 cfm <- table(test_dataset$wine, test_dataset$pred)
 print(cfm)

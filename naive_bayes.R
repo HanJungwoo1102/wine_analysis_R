@@ -13,8 +13,12 @@ test_dataset <- rbind(test_dataset, wine_b_dataset[-1:-last_b, ])
 
 model <- naiveBayes(wine ~ ., data = train_dataset)
 
-pred <- predict(model, test_dataset[,-1], method="class")
+pred <- predict(model, train_dataset[,-1], method="class")
+cfm <- table(train_dataset$wine, pred)
 
+print(cfm)
+
+pred <- predict(model, test_dataset[,-1], method="class")
 cfm <- table(test_dataset$wine, pred)
 
 print(cfm)
