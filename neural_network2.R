@@ -27,7 +27,7 @@ wine_train_dataset <- cbind(nny_train, wine_train_dataset[, -1])
 nny_test <- class.ind(wine_test_dataset[, 1])
 wine_test_dataset <- cbind(nny_test, wine_test_dataset[, -1])
 
-nn_wine <- nnet(wine_train_dataset[, 3:11], wine_train_dataset[, 1:2], size = 2, maxit = 100)
+nn_wine <- nnet(wine_train_dataset[, 3:11], wine_train_dataset[, 1:2], size = 5, maxit = 100)
 
 train_pred <- apply(nn_wine$fitted.value, 1, which.max)
 train_true <- apply(wine_train_dataset[, 1:2], 1, which.max)
@@ -35,6 +35,7 @@ train_err <- sum(train_pred != train_true) / length(train_pred)
 train_table <- table(train_pred, train_true)
 
 print(train_table)
+print(train_err)
 
 test_pred <- apply(predict(nn_wine, wine_test_dataset[, 3:11], type="raw"), 1, which.max)
 test_true <- apply(wine_test_dataset[, 1:2], 1, which.max)
@@ -42,3 +43,4 @@ test_err <- sum(test_pred != test_true) / length(test_pred)
 test_table <- table(test_pred, test_true)
 
 print(test_table)
+print(test_err)

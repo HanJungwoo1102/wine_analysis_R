@@ -12,7 +12,7 @@ wine_train_dataset <- cbind(nny_train, wine_train_dataset[, -1])
 nn_wine <- nnet(
     wine_train_dataset[, 3:11],
     wine_train_dataset[, 1:2],
-    size = 2,
+    size = 5,
     maxit = 100
 )
 
